@@ -1,3 +1,6 @@
+import random
+import string
+
 import requests
 
 from django.conf import settings
@@ -9,9 +12,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .llm import call_claude
-from .models import Bar, Match, ScreeningTag
+from .models import Bar, ChatMessage, ChatRoom, Match, ScreeningTag
 from .serializers import (
     BarSerializer,
+    ChatMessageSerializer,
+    ChatRoomSerializer,
     MatchSerializer,
     ScreeningTagSerializer,
     SignupSerializer,
@@ -193,3 +198,82 @@ def match_predict(request):
     )
     explanation = call_claude(prompt, max_tokens=200)
     return Response({"team_a": team_a, "team_b": team_b, **probs, "explanation": explanation})
+
+
+# --------------------------------------------------------------------------
+# Chant & Banter -- nearby + global live chat
+# --------------------------------------------------------------------------
+# NOTE: "Nearby" is NOT real Bluetooth proximity chat -- web browsers can't
+# do that (Web Bluetooth only pairs one device at a time via a manual
+# picker; there's no way for a page to discover every nearby phone running
+# this app). This is geolocation-grid chat instead: everyone whose rounded
+# coordinates land in the same ~1km cell shares a room automatically. Same
+# demo effect ("open the app at the bar, you're instantly chatting with
+# people here"), honest about how it actually works.
+GRID_PRECISION = 2  # 2 decimal places of lat/lng ~= 1.1km grid cells
+
+
+def _generate_invite_code(length=6):
+    alphabet = string.ascii_uppercase + string.digits
+    for _ in range(10):
+        code = "".join(random.choices(alphabet, k=length))
+        if not ChatRoom.objects.filter(code=code).exists():
+            return code
+    # exceedingly unlikely fallback
+    return "".join(random.choices(alphabet, k=length + 2))
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def chat_nearby_room(request):
+    lat = request.data.get("lat")
+    lng = request.data.get("lng")
+    if lat is None or lng is None:
+        return Response({"error": "lat and lng are required"}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        grid_lat = round(float(lat), GRID_PRECISION)
+        grid_lng = round(float(lng), GRID_PRECISION)
+    except (TypeError, ValueError):
+        return Response({"error": "lat and lng must be numbers"}, status=status.HTTP_400_BAD_REQUEST)
+
+    code = f"NEARBY-{grid_lat}-{grid_lng}"
+    room, _ = ChatRoom.objects.get_or_create(code=code, defaults={"kind": "nearby"})
+    return Response(ChatRoomSerializer(room).data)
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def chat_create_global_room(request):
+    room = ChatRoom.objects.create(code=_generate_invite_code(), kind="global")
+    return Response(ChatRoomSerializer(room).data, status=status.HTTP_201_CREATED)
+
+
+@api_view(["GET", "POST"])
+@permission_classes([AllowAny])
+def chat_room_messages(request, code):
+    try:
+        room = ChatRoom.objects.get(code=code.upper() if len(code) == 6 else code)
+    except ChatRoom.DoesNotExist:
+        return Response(
+            {"error": "Room not found. Double check the invite code."},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+
+    if request.method == "POST":
+        sender_name = (request.data.get("sender_name") or "Fan").strip()[:60] or "Fan"
+        text = (request.data.get("text") or "").strip()[:500]
+        if not text:
+            return Response({"error": "text is required"}, status=status.HTTP_400_BAD_REQUEST)
+        msg = ChatMessage.objects.create(room=room, sender_name=sender_name, text=text)
+        return Response(ChatMessageSerializer(msg).data, status=status.HTTP_201_CREATED)
+
+    # GET -- poll for messages, optionally only those after a given id
+    qs = room.messages.all()
+    since_id = request.query_params.get("since")
+    if since_id:
+        try:
+            qs = qs.filter(id__gt=int(since_id))
+        except ValueError:
+            pass
+    return Response(ChatMessageSerializer(qs, many=True).data)

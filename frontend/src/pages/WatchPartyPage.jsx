@@ -68,7 +68,7 @@ export default function WatchPartyPage() {
   return (
     <div className="mx-auto max-w-6xl px-5 py-6">
       <div className="mb-6">
-        <p className="font-mono text-xs uppercase tracking-widest text-signal">Challenge 4</p>
+        <p className="font-mono text-xs uppercase tracking-widest text-signal">FIFA</p>
         <h1 className="font-display text-3xl font-bold sm:text-4xl">Watch Party Finder</h1>
         <p className="mt-1 text-sm text-chalk/60">
           Toronto's sports bars, mapped for World Cup 2026. Filter by team or vibe, pick a match,

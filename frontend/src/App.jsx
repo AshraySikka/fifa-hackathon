@@ -6,6 +6,7 @@ import PredictorPage from "./pages/PredictorPage";
 import RefChatPage from "./pages/RefChatPage";
 import AccountPage from "./pages/AccountPage";
 import BanterPage from "./pages/BanterPage";
+import AccessPage from "./pages/AccessPage";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/ref-chat" element={<RefChatPage />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/banter" element={<BanterPage />} />
+          <Route path="/access" element={<AccessPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

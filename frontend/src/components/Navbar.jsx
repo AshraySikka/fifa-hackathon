@@ -6,6 +6,7 @@ const links = [
   { to: "/predictor", label: "Predictor" },
   { to: "/ref-chat", label: "Ref Chat" },
   { to: "/banter", label: "Chant & Banter" },
+  { to: "/access", label: "Accessibility" },
 ];
 
 export default function Navbar() {

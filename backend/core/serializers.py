@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import Bar, Match, ScreeningTag
+from .models import Bar, ChatMessage, ChatRoom, Match, ScreeningTag
 
 
 class MatchSerializer(serializers.ModelSerializer):
@@ -37,6 +37,18 @@ class BarSerializer(serializers.ModelSerializer):
 
     def get_team_tag_list(self, obj):
         return [t.strip() for t in obj.team_tags.split(",") if t.strip()]
+
+
+class ChatMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChatMessage
+        fields = ["id", "sender_name", "text", "created_at"]
+
+
+class ChatRoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChatRoom
+        fields = ["id", "code", "kind", "created_at"]
 
 
 class SignupSerializer(serializers.ModelSerializer):
