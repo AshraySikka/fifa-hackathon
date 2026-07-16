@@ -1,0 +1,130 @@
+[
+  {
+    "model": "core.bar",
+    "pk": 1,
+    "fields": {
+      "name": "Real Sports Bar & Grill",
+      "address": "15 York St, Toronto, ON M5J 0A3",
+      "phone": "+1-416-815-7325",
+      "rating": 4.3,
+      "hours": "Mon-Sun 11am-2am",
+      "lat": 43.6430,
+      "lng": -79.3791,
+      "vibe": "rowdy",
+      "team_tags": "Canada,USA,England,Brazil",
+      "source": "seed"
+    }
+  },
+  {
+    "model": "core.bar",
+    "pk": 2,
+    "fields": {
+      "name": "The Loose Moose Tap & Grill",
+      "address": "146 John St, Toronto, ON M5V 2E5",
+      "phone": "+1-416-598-1707",
+      "rating": 4.1,
+      "hours": "Mon-Sun 11am-2am",
+      "lat": 43.6478,
+      "lng": -79.3903,
+      "vibe": "rowdy",
+      "team_tags": "Canada,Portugal,Italy",
+      "source": "seed"
+    }
+  },
+  {
+    "model": "core.bar",
+    "pk": 3,
+    "fields": {
+      "name": "Duggan's Brewery",
+      "address": "245 Adelaide St W, Toronto, ON M5H 1X8",
+      "phone": "+1-416-260-3444",
+      "rating": 4.4,
+      "hours": "Mon-Sun 11:30am-2am",
+      "lat": 43.6479,
+      "lng": -79.3899,
+      "vibe": "casual",
+      "team_tags": "Ireland,England,Canada",
+      "source": "seed"
+    }
+  },
+  {
+    "model": "core.bar",
+    "pk": 4,
+    "fields": {
+      "name": "Scallywags Sports Bar & Grill",
+      "address": "11 Duncan St, Toronto, ON M5H 3W2",
+      "phone": "+1-416-599-5619",
+      "rating": 4.2,
+      "hours": "Mon-Sun 11am-2am",
+      "lat": 43.6474,
+      "lng": -79.3873,
+      "vibe": "rowdy",
+      "team_tags": "Canada,Mexico,USA",
+      "source": "seed"
+    }
+  },
+  {
+    "model": "core.bar",
+    "pk": 5,
+    "fields": {
+      "name": "The Football Factory",
+      "address": "412 Queen St W, Toronto, ON M5V 2A7",
+      "phone": "+1-416-260-3444",
+      "rating": 4.5,
+      "hours": "Mon-Sun 10am-2am",
+      "lat": 43.6484,
+      "lng": -79.3990,
+      "vibe": "rowdy",
+      "team_tags": "England,Spain,Argentina,Brazil",
+      "source": "seed"
+    }
+  },
+  {
+    "model": "core.bar",
+    "pk": 6,
+    "fields": {
+      "name": "Fionn MacCool's Esplanade",
+      "address": "70 The Esplanade, Toronto, ON M5E 1R2",
+      "phone": "+1-416-362-2265",
+      "rating": 4.0,
+      "hours": "Mon-Sun 11am-1am",
+      "lat": 43.6470,
+      "lng": -79.3737,
+      "vibe": "family",
+      "team_tags": "Ireland,Canada,Wales",
+      "source": "seed"
+    }
+  },
+  {
+    "model": "core.bar",
+    "pk": 7,
+    "fields": {
+      "name": "Wvrst",
+      "address": "609 King St W, Toronto, ON M5V 1M5",
+      "phone": "+1-416-703-7775",
+      "rating": 4.3,
+      "hours": "Mon-Sun 11:30am-1am",
+      "lat": 43.6444,
+      "lng": -79.4009,
+      "vibe": "casual",
+      "team_tags": "Germany,Netherlands,Belgium",
+      "source": "seed"
+    }
+  },
+  {
+    "model": "core.bar",
+    "pk": 8,
+    "fields": {
+      "name": "Sportsnet Grill",
+      "address": "500 King St W, Toronto, ON M5V 1L9",
+      "phone": "+1-416-597-9585",
+      "rating": 4.2,
+      "hours": "Mon-Sun 11am-2am",
+      "lat": 43.6453,
+      "lng": -79.3988,
+      "vibe": "rowdy",
+      "team_tags": "Canada,USA,Mexico,France",
+      "source": "seed"
+    }
+  }
+]

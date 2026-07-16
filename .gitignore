@@ -1,0 +1,15 @@
+cat > .gitignore << 'EOF'
+# backend
+backend/venv/
+backend/db.sqlite3
+backend/.env
+backend/**/__pycache__/
+*.pyc
+
+# frontend
+frontend/node_modules/
+frontend/dist/
+
+# macOS
+.DS_Store
+EOF

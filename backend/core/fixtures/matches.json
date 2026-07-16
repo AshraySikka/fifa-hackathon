@@ -1,0 +1,12 @@
+[
+  {"model": "core.match", "pk": 1, "fields": {"team_a": "Canada", "team_b": "Mexico", "date": "2026-06-12", "time": "15:00:00", "venue": "BMO Field, Toronto"}},
+  {"model": "core.match", "pk": 2, "fields": {"team_a": "USA", "team_b": "England", "date": "2026-06-13", "time": "18:00:00", "venue": "BMO Field, Toronto"}},
+  {"model": "core.match", "pk": 3, "fields": {"team_a": "Brazil", "team_b": "Portugal", "date": "2026-06-14", "time": "12:00:00", "venue": "BMO Field, Toronto"}},
+  {"model": "core.match", "pk": 4, "fields": {"team_a": "Argentina", "team_b": "Germany", "date": "2026-06-15", "time": "15:00:00", "venue": "BMO Field, Toronto"}},
+  {"model": "core.match", "pk": 5, "fields": {"team_a": "France", "team_b": "Netherlands", "date": "2026-06-16", "time": "18:00:00", "venue": "BMO Field, Toronto"}},
+  {"model": "core.match", "pk": 6, "fields": {"team_a": "Spain", "team_b": "Belgium", "date": "2026-06-17", "time": "12:00:00", "venue": "BMO Field, Toronto"}},
+  {"model": "core.match", "pk": 7, "fields": {"team_a": "Canada", "team_b": "Ireland", "date": "2026-06-18", "time": "15:00:00", "venue": "BMO Field, Toronto"}},
+  {"model": "core.match", "pk": 8, "fields": {"team_a": "Italy", "team_b": "Croatia", "date": "2026-06-19", "time": "18:00:00", "venue": "BMO Field, Toronto"}},
+  {"model": "core.match", "pk": 9, "fields": {"team_a": "Japan", "team_b": "South Korea", "date": "2026-06-20", "time": "12:00:00", "venue": "BMO Field, Toronto"}},
+  {"model": "core.match", "pk": 10, "fields": {"team_a": "USA", "team_b": "Canada", "date": "2026-06-21", "time": "15:00:00", "venue": "BMO Field, Toronto"}}
+]
