@@ -31,8 +31,19 @@ export default function RefChatPage() {
     setMessages((m) => [...m, { role: "user", text: q }]);
     setInput("");
     setLoading(true);
+    // Button-triggered asks already pass the exact event's commentary as
+    // context. Free-typed questions in Live Commentary mode had NO context
+    // at all before this fix -- Claude had nothing to ground on and gave
+    // generic answers. Now any typed question in commentary mode falls back
+    // to the full demo transcript, so Claude can find the relevant moment
+    // itself instead of only working when you click a suggested button.
+    const context =
+      commentaryContext ||
+      (mode === "commentary"
+        ? DEMO_COMMENTARY.map((e) => `${e.minute} ${e.text}`).join("\n")
+        : "");
     try {
-      const data = await api.refExplain(q, commentaryContext);
+      const data = await api.refExplain(q, context);
       setMessages((m) => [...m, { role: "ref", text: data.answer }]);
     } catch {
       setMessages((m) => [...m, { role: "ref", text: "Couldn't reach the backend -- is it running on :8000?" }]);

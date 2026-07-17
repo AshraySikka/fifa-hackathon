@@ -33,11 +33,26 @@ export default function AccessPage() {
   function speak(text) {
     if (!speechSupported) return;
     const synth = window.speechSynthesis;
-    synth.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 1.0;
-    utterance.onerror = (e) => console.error("Speech synthesis error:", e.error);
-    synth.speak(utterance);
+
+    const doSpeak = () => {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1.0;
+      utterance.onerror = (e) => console.error("Speech synthesis error:", e.error);
+      synth.speak(utterance);
+    };
+
+    // Chrome has a known bug: calling cancel() immediately followed by
+    // speak() in the same tick silently drops the new utterance -- no
+    // error, no sound, nothing happens. Only cancel+delay when something
+    // is actually mid-utterance; otherwise speak immediately (this also
+    // keeps the very first call synchronous with the user's click, which
+    // Safari requires for audio to be allowed at all).
+    if (synth.speaking || synth.pending) {
+      synth.cancel();
+      setTimeout(doSpeak, 60);
+    } else {
+      doSpeak();
+    }
   }
 
   function setAudio(next) {
@@ -52,6 +67,15 @@ export default function AccessPage() {
       window.speechSynthesis?.cancel();
     } else if (current) {
       speak(current.text);
+    }
+  }
+
+  function handlePlayPause() {
+    if (playing) {
+      setPlaying(false);
+    } else {
+      if (!atEnd) goTo(index + 1); // advance right away instead of waiting for the timer
+      setPlaying(true);
     }
   }
 
@@ -180,7 +204,7 @@ export default function AccessPage() {
             ← Prev
           </button>
           <button
-            onClick={() => setPlaying((p) => !p)}
+            onClick={handlePlayPause}
             disabled={atEnd && !playing}
             className="rounded-xl bg-signal px-5 py-2 text-sm font-semibold text-pitch-950 hover:bg-signal-glow disabled:opacity-40 transition-colors"
           >
